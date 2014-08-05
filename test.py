@@ -15,14 +15,19 @@ def find_second_last(text, pattern):
 	return text.rfind(pattern, 0, text.rfind(pattern))
 
 oDirName = '/home/brush/Downloads/weather/DATA'
+baseUrl = 'http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/'
+wpsDir = '/home/brush/Downloads/weather/WPS'
+wrfDir = '/home/brush/Downloads/weather/WRFV3/test/em_real'
+namelistWRFPath = '/home/brush/Downloads/weather/WPS/namelist.wps'
+namelistInputPath = '/home/brush/Downloads/weather/WRFV3/test/em_real/namelist.input'
+emRealDir = '/home/brush/Downloads/weather/WRFV3/test/em_real/'
 
 if len(sys.argv) > 1:
 	if os.path.exists(oDirName):
 		shutil.rmtree(oDirName)
 
 	os.makedirs(oDirName)
-
-	baseUrl = 'http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/'
+	
 	topLevelResponse = urllib2.urlopen(baseUrl, timeout=60).read()
 
 	lastGfsIndex = find_second_last(topLevelResponse, '>gfs.')+1
@@ -31,7 +36,7 @@ if len(sys.argv) > 1:
 
 	print directoryName
 
-	fullDirectoryUrl = 'http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/' + directoryName + '/'
+	fullDirectoryUrl = baseUrl + directoryName + '/'
 	dirLevelResponse = urllib2.urlopen(fullDirectoryUrl, timeout=60).read()
 
 	m = re.findall('>gfs\\.t[0-9].z\\.pgrbf[0-9].\\.grib2<', dirLevelResponse)
@@ -42,7 +47,6 @@ if len(sys.argv) > 1:
 		print 'Downloading ' + fullFileUrl
 		urllib.urlretrieve(fullFileUrl, os.path.join(oDirName, fileName))
 
-wpsDir = '/home/brush/Downloads/weather/WPS'
 wpsDirFiles = os.listdir(wpsDir)
 
 for wpsDirFile in wpsDirFiles:
@@ -55,7 +59,6 @@ for wpsDirFile in wpsDirFiles:
 	elif wpsDirFile.startswith('met_em'):
 		os.remove(os.path.join(wpsDir,wpsDirFile))
 
-wrfDir = '/home/brush/Downloads/weather/WRFV3/test/em_real'
 wrfFiles = os.listdir(wrfDir)
 
 for wrfFile in wrfFiles:
@@ -107,7 +110,7 @@ endHour = int(output[8:])
 
 numberOfFiles = len(grib2Files)
 
-file = open('./WPS/namelist.wps','r+')
+file = open(namelistWRFPath,'r+')
 namelistContent = file.read()
 
 startDateIndex = namelistContent.index('start_date')
@@ -131,7 +134,7 @@ file.write(namelistContent)
 file.truncate()
 file.close()
 
-file = open('/home/brush/Downloads/weather/WRFV3/test/em_real/namelist.input', 'r+')
+file = open(namelistInputPath, 'r+')
 namelistInputContent = file.read()
 namelistInputContent = replace_wrfNamelist(namelistInputContent, 'start_year', str(startYear))
 namelistInputContent = replace_wrfNamelist(namelistInputContent, 'start_month', str(startMonth))
@@ -147,7 +150,6 @@ file.write(namelistInputContent)
 file.truncate()
 file.close()
 
-wpsDir = '/home/brush/Downloads/weather/WPS'
 os.chdir(wpsDir)
 print os.getcwd()
 subprocess.call(['./geogrid.exe'], shell=True)
@@ -155,9 +157,7 @@ subprocess.call(['./link_grib.csh ../DATA/'], shell=True)
 subprocess.call(['./ungrib.exe'], shell=True)
 subprocess.call(['./metgrid.exe'], shell=True)
 
-emRealDir = '/home/brush/Downloads/weather/WRFV3/test/em_real/'
 os.chdir(emRealDir)
-#subprocess.call(['ln','-sf','/home/brush/Downloads/weather/WPS/met_em*', '.'])
 files = os.listdir(wpsDir)
 for file in files:
 	if file.startswith('met_em'):
