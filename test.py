@@ -169,3 +169,4 @@ subprocess.call(['mpirun','-np','1','real.exe'])
 subprocess.call(['mpirun','-np','8','wrf.exe'])
 os.environ["NCARG_ROOT"] = ncargRoot
 #subprocess.call(['ncl','wrfOutPath=' + nclFilePath,'
+#ncl wrf_Precip.ncl netcdfFile=\"/home/brush/Downloads/weather/wrfout_d01_2014-08-04_00:00:00\"

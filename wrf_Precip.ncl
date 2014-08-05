@@ -9,7 +9,7 @@ begin
 ;
 ; The WRF ARW input file.  
 ; This needs to have a ".nc" appended, so just do it.
-  a = addfile(wrfOutPath,"r")
+  a = addfile(netcdfFile,"r")
 
 
 ; We generate plots, but what kind do we prefer?
@@ -140,13 +140,13 @@ begin
       ; MAKE PLOTS                                       
 
         ; Total Precipitation 
-          plot = wrf_map_overlays(a,wks,contour_tot,pltres,mpres)
+        ;  plot = wrf_map_overlays(a,wks,contour_tot,pltres,mpres)
 
         ; Total Precipitation Tendency + SLP
           plot = wrf_map_overlays(a,wks,(/contour_tend,contour_psl/),pltres,mpres)
 
         ; Non-Convective and Convective Precipiation Tendencies
-          plot = wrf_map_overlays(a,wks,(/contour_res,contour_prm/),pltres,mpres)
+        ;  plot = wrf_map_overlays(a,wks,(/contour_res,contour_prm/),pltres,mpres)
 
     end if    ; END IF FOR SKIPPING FIRST TIME
 
