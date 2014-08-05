@@ -9,7 +9,7 @@ begin
 ;
 ; The WRF ARW input file.  
 ; This needs to have a ".nc" appended, so just do it.
-  a = addfile("./wrfout_d01_2014-08-04_00:00:00","r")
+  a = addfile(wrfOutPath,"r")
 
 
 ; We generate plots, but what kind do we prefer?
