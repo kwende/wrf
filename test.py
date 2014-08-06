@@ -68,6 +68,8 @@ for wrfFile in wrfFiles:
 		os.remove(os.path.join(wrfDir, wrfFile))
 	elif wrfFile.startswith('wrfout'):
 		os.remove(os.path.join(wrfDir, wrfFile))
+	elif wrfFile.startswith('wrfrst'):
+		os.remove(os.path.join(wrfDir, wrfFile))
 
 grib2Files = os.listdir(oDirName)
 firstGribFile = ''
