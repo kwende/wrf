@@ -70,9 +70,9 @@ for wrfFile in wrfFiles:
 		os.remove(os.path.join(wrfDir, wrfFile))
 	elif wrfFile.startswith('wrfrst'):
 		os.remove(os.path.join(wrfDir, wrfFile))
-	elif wrfFile.endswith('.png')
+	elif wrfFile.endswith('.png'):
 		os.remove(os.path.join(wrfDir, wrfFile))
-	elif(wrfFile == 'out.mp4')
+	elif(wrfFile == 'out.mp4'):
 		os.remove(os.path.join(wrfDir, wrfFile))
 
 grib2Files = os.listdir(oDirName)
