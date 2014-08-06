@@ -70,6 +70,10 @@ for wrfFile in wrfFiles:
 		os.remove(os.path.join(wrfDir, wrfFile))
 	elif wrfFile.startswith('wrfrst'):
 		os.remove(os.path.join(wrfDir, wrfFile))
+	elif wrfFile.endswith('.png')
+		os.remove(os.path.join(wrfDir, wrfFile))
+	elif(wrfFile == 'out.mp4')
+		os.remove(os.path.join(wrfDir, wrfFile))
 
 grib2Files = os.listdir(oDirName)
 firstGribFile = ''
@@ -178,3 +182,5 @@ for wrfFile in wrfFiles:
 		wrfFileForProcessing = wrfFile
 
 subprocess.call(['ncl',nclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
+#ffmpeg -r 4 -i plt_Precip.000%03d.png -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
+subprocess.call(['ffmpeg', '-r', '4', '-i', 'plt_Precip.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4'])
