@@ -22,7 +22,7 @@ namelistWRFPath = '/home/brush/Downloads/weather/WPS/namelist.wps'
 namelistInputPath = '/home/brush/Downloads/weather/WRFV3/test/em_real/namelist.input'
 emRealDir = '/home/brush/Downloads/weather/WRFV3/test/em_real/'
 ncargRoot = '/usr/local'
-nclFilePath = '/home/brush/Downloads/weather/code/wrf_Precip.ncl'
+nclFilePath = '/home/brush/Downloads/weather/code/wrf_Precip3.ncl'
 
 if len(sys.argv) > 1:
 	if os.path.exists(oDirName):
