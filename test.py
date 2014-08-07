@@ -90,7 +90,7 @@ for grib2File in grib2Files:
 
 print firstGribFile
 
-output = subprocess.check_output('wgrib2 -start_ft ' + firstGribFile, stderr=subprocess.STDOUT,shell=True)
+output = subprocess.check_output('/usr/local/bin/wgrib2 -start_ft ' + firstGribFile, stderr=subprocess.STDOUT,shell=True)
 output = output.split('\n',1)[0]
 output = output[output.index('=')+1:]
 
@@ -103,7 +103,7 @@ startMonth = int(output[4:6])
 startDay = int(output[6:8])
 startHour = int(output[8:])
 
-output = subprocess.check_output('wgrib2 -start_ft ' + lastGribFile, stderr=subprocess.STDOUT,shell=True)
+output = subprocess.check_output('/usr/local/bin/wgrib2 -start_ft ' + lastGribFile, stderr=subprocess.STDOUT,shell=True)
 output = output.split('\n',1)[0]
 output = output[output.index('=')+1:]
 
@@ -174,8 +174,8 @@ for file in files:
 	if file.startswith('met_em'):
 		os.symlink(os.path.join(wpsDir,file),os.path.join(emRealDir,file))
 
-subprocess.call(['mpirun','-np','1','real.exe'])
-subprocess.call(['mpirun','-np','8','wrf.exe'])
+subprocess.call(['/usr/bin/mpirun','-np','1','real.exe'])
+subprocess.call(['/usr/bin/mpirun','-np','8','wrf.exe'])
 os.environ["NCARG_ROOT"] = ncargRoot
 
 wrfFiles = os.listdir(wrfDir)
@@ -184,6 +184,6 @@ for wrfFile in wrfFiles:
 	if wrfFile.startswith('wrfout'):
 		wrfFileForProcessing = wrfFile
 
-subprocess.call(['ncl',nclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
+subprocess.call(['/usr/local/bin/ncl',nclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
 #ffmpeg -r 4 -i plt_Precip.000%03d.png -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
-subprocess.call(['ffmpeg', '-r', '4', '-i', 'plt_Precip.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4'])
+subprocess.call(['/usr/local/bin/ffmpeg', '-r', '4', '-i', 'plt_Precip.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4'])
