@@ -99,8 +99,8 @@ startInWPSFormat = 'start_date = \'' + startInWPSFormat + '\''
 print startInWPSFormat
 
 startYear = int(output[:4])
-startMonth = int(output[5:6])
-startDay = int(output[7:8])
+startMonth = int(output[4:6])
+startDay = int(output[6:8])
 startHour = int(output[8:])
 
 output = subprocess.check_output('wgrib2 -start_ft ' + lastGribFile, stderr=subprocess.STDOUT,shell=True)
@@ -112,9 +112,12 @@ endInWPSFormat = 'end_date = \'' + endInWPSFormat + '\''
 print endInWPSFormat 
 
 endYear = int(output[:4])
-endMonth = int(output[5:6])
-endDay = int(output[7:8])
+endMonth = int(output[4:6])
+endDay = int(output[6:8])
 endHour = int(output[8:])
+
+print 'googlieba ' + output
+print 'Googliebah ' + output[7:8]
 
 numberOfFiles = len(grib2Files)
 
