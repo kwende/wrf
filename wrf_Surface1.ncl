@@ -37,7 +37,7 @@ wks = gsn_open_wks(type,"plt_Surface1")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  do it = 0,ntimes-1,2             ; TIME LOOP
+  do it = 0,ntimes-1,1             ; TIME LOOP
 
     print("Working on time: " + times(it) )
     res@TimeLabel = times(it)   ; Set Valid time to use on plots
@@ -113,7 +113,7 @@ wks = gsn_open_wks(type,"plt_Surface1")
 
     ; MAKE PLOTS                                       
       plot = wrf_map_overlays(a,wks,(/contour_tc,contour_psl,vector/),pltres,mpres)
-      plot = wrf_map_overlays(a,wks,(/contour_td,vector/),pltres,mpres)
+     ; plot = wrf_map_overlays(a,wks,(/contour_td,vector/),pltres,mpres)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

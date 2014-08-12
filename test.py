@@ -186,4 +186,4 @@ for wrfFile in wrfFiles:
 
 subprocess.call(['/usr/local/bin/ncl',nclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
 #ffmpeg -r 4 -i plt_Precip.000%03d.png -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
-subprocess.call(['/usr/local/bin/ffmpeg', '-r', '4', '-i', 'plt_Precip.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4'])
+subprocess.call(['/usr/local/bin/ffmpeg', '-r', '4', '-i', 'plt_Precip3.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4'])
