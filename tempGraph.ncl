@@ -1,7 +1,7 @@
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
 
-a = addfile("wrfout_d01_2014-08-18_18:00:00","r")
+a = addfile(netcdfPath,"r")
 
 times = wrf_user_getvar(a,"times",-1)
 ntimes = dimsizes(times)
@@ -15,8 +15,8 @@ do it = 0,ntimes-1,1
 	tf2 = 1.8*tc2+32.
 
 	y(it) = tf2(34,36)
-	x(it) = it
+	x(it) = it * 3
 end do
 
-wks = gsn_open_wks("png","fart")
+wks = gsn_open_wks("png","tempGraph")
 plot = gsn_xy(wks,x,y,False)
