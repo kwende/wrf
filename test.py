@@ -24,6 +24,7 @@ emRealDir = '/home/brush/Downloads/weather/WRFV3/test/em_real/'
 ncargRoot = '/usr/local'
 nclFilePath = '/home/brush/Downloads/weather/code/wrf_Precip3.ncl'
 tempNclFilePath = '/home/brush/Downloads/weather/code/tempGraph.ncl'
+nclTempFilePath = '/home/brush/Downloads/weather/code/wrf_Surface1.ncl'
 
 if len(sys.argv) > 1:
 	if os.path.exists(oDirName):
@@ -186,6 +187,8 @@ for wrfFile in wrfFiles:
 		wrfFileForProcessing = wrfFile
 
 subprocess.call(['/usr/local/bin/ncl',nclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
-subprocess.call(['/usr/local/bin/ncl',tempNclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
+subprocess.call(['/usr/local/bin/ncl',nclTempFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
+#subprocess.call(['/usr/local/bin/ncl',tempNclFilePath,'netcdfFile=\"' + wrfFileForProcessing + '"'])
 #ffmpeg -r 4 -i plt_Precip.000%03d.png -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
 subprocess.call(['/usr/local/bin/ffmpeg', '-r', '4', '-i', 'plt_Precip3.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'out.mp4'])
+subprocess.call(['/usr/local/bin/ffmpeg', '-r', '4', '-i', 'plt_Surface1.000%03d.png', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', 'temp.mp4'])
