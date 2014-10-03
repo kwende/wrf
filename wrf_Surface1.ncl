@@ -10,15 +10,16 @@ begin
 ;
 ; The WRF ARW input file.  
 ; This needs to have a ".nc" appended, so just do it.
-  a = addfile(netcdfFile,"r")
+;  a = addfile("/home/brush/Downloads/weather/WRFV3/test/em_real/wrfout_d01_2014-10-02_18:00:00","r")
+a = addfile(netcdfFile,"r")
 
 ; We generate plots, but what kind do we prefer?
 ;  type = "x11"
 ; type = "pdf"
 ; type = "ps"
 ; type = "ncgm"
-type="png"  
-wks = gsn_open_wks(type,"plt_Surface1")
+  type = "png"
+  wks = gsn_open_wks(type,"plt_Surface1")
 
 ; Set some basic resources
   res = True
@@ -26,6 +27,7 @@ wks = gsn_open_wks(type,"plt_Surface1")
 
   pltres = True
   mpres = True
+  mpres@mpUSStateLineColor         = "Black"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -73,17 +75,22 @@ wks = gsn_open_wks(type,"plt_Surface1")
 
     ; Plotting options for T                
       opts = res                         
-      opts@cnFillOn = True  
-      opts@ContourParameters = (/ -20., 90., 5./)
-      opts@gsnSpreadColorEnd = -3  ; End third from the last color in color map
+      opts@cnFillOn = True
+      opts@cnLinesOn = True	
+      opts@cnHighLabelsOn = True
+      opts@cnLowLabelsOn = True
+      opts@ContourParameters = (/ -20., 90., 10./)
+      ;opts@ContourParameters = (/ -20., 100., 5./)
+      opts@cnLineLabelBackgroundColor = 10
+      opts@gsnSpreadColorEnd = -10  ; End third from the last color in color map
       contour_tc = wrf_contour(a,wks,tf2,opts)
       delete(opts)
 
 
     ; Plotting options for Td
       opts = res         
-      opts@cnFillOn = True 
-      opts@cnLinesOn = True
+      opts@cnFillOn = False 
+      opts@cnLinesOn = False
       opts@cnLineLabelsOn = True
       opts@ContourParameters = (/ -20., 90., 5./) 
       opts@cnLineLabelBackgroundColor = -1
@@ -111,12 +118,14 @@ wks = gsn_open_wks(type,"plt_Surface1")
       delete(opts)
   
 
-    ; MAKE PLOTS                                       
-      plot = wrf_map_overlays(a,wks,(/contour_tc,contour_psl,vector/),pltres,mpres)
-     ; plot = wrf_map_overlays(a,wks,(/contour_td,vector/),pltres,mpres)
+    ; MAKE PLOTS
+      plot = wrf_map_overlays(a,wks,(/contour_tc/),pltres,mpres)                                       
+      ;plot = wrf_map_overlays(a,wks,(/contour_tc,contour_psl,vector/),pltres,mpres)
+      ;plot = wrf_map_overlays(a,wks,(/contour_td,vector/),pltres,mpres)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   end do        ; END OF TIME LOOP
 
 end
+
